@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Marvel</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes particleMove {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: #222;
+            transition: background 0.5s, color 0.5s;
+            overflow-x: hidden;
+            animation: fadeIn 1s ease forwards;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body.dark-mode {
+            background: #121212;
+            color: #eee;
+        }
+
+        /* Animated particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleMove linear forwards;
+            opacity: 0;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7));
+        }
+
+        h1 {
+            margin: 0;
+            padding: 20px 20px 10px 20px;
+            font-size: 36px;
+            text-align: left;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        /* Animated underline */
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #fff, #ffb347, #fff);
+            background-size: 200% 100%;
+            animation: shine 3s linear infinite;
+            border-radius: 2px;
+        }
+
+        .description {
+            font-size: 18px;
+            color: #fff;
+            padding: 0 20px 20px 20px;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            line-height: 1.5;
+            animation: fadeIn 1.5s ease forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            animation: fadeIn 1.8s ease forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .logo img {
+            width: 600px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .features {
+            max-width: 800px;
+            margin: 30px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 15px 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            color: #fff;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 0.7s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .features h2 {
+            margin-top: 0;
+        }
+
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        ul li {
+            cursor: default;
+            transition: transform 0.3s ease;
+        }
+
+        ul li:hover {
+            animation: bounce 0.6s ease;
+            color: #ffb347;
+        }
+
+        button.toggle-theme {
+            margin: 0 20px 20px 20px;
+            padding: 10px 20px;
+            background-color: #ff416c;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 65, 108, 0.7);
+            transition: background-color 0.3s ease;
+            animation: fadeIn 2.5s ease forwards;
+            animation-delay: 0.9s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        button.toggle-theme:hover {
+            background-color: #ff6f91;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Hello <span th:text="${name}">Marvel</span></h1>
+
+<div class="description">
+    Marvel is a popular entertainment company known for its comic books,
+    movies, and TV shows featuring superheroes like Spider-Man, Iron Man, and the Avengers.
+    It’s famous for its rich storytelling, iconic characters, and the Marvel Cinematic Universe (MCU) film series.
+</div>
+
+<div class="features">
+    <h2>Features of Marvel</h2>
+    <ul>
+        <li>Vast universe of superheroes and villains</li>
+        <li>Blockbuster movies and TV series</li>
+        <li>Engaging comic book storylines</li>
+        <li>Expanding Marvel Cinematic Universe (MCU)</li>
+        <li>Merchandise, games, and theme parks</li>
+    </ul>
+</div>
+
+<div class="logo">
+    <img src="/Marvel.jpg" alt="Marvel Logo">
+</div>
+
+<button class="toggle-theme" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+
+<!-- Animated particles -->
+<script>
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        const size = Math.random() * 6 + 4;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * window.innerWidth}px`;
+        particle.style.top = `${window.innerHeight + size}px`;
+        particle.style.animationDuration = `${4 + Math.random() * 3}s`;
+        document.body.appendChild(particle);
+
+        // Remove particle after animation
+        particle.addEventListener('animationend', () => {
+            particle.remove();
+        });
+    }
+
+    // Create a particle every 300ms
+    setInterval(createParticle, 300);
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+    }
+</script>
+
+</body>
+</html>
